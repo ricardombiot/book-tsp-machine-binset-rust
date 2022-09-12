@@ -15,6 +15,7 @@ pub mod machine {
 
     pub mod machines {
         pub mod hal_machine_test;
+        pub mod tsp_machine_test;
     }
 }
 

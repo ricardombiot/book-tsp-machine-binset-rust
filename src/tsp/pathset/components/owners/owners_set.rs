@@ -1,57 +1,47 @@
 use crate::tsp::utils::alias::{UniqueNodeKey};
-use std::collections::HashSet;
 use std::fmt;
 use std::fmt::Debug;
 
+use crate::binset::binset::{BinSet};
+use crate::binset::numeric_set::TNumericSet;
+
 #[derive(Clone, Debug)]
 pub struct OwnersFixedSet {
-    nobinary_set : HashSet<UniqueNodeKey>
+    binary_set : BinSet
 }
 
 impl OwnersFixedSet {
     pub fn new(_size_fixed : UniqueNodeKey) -> Self { 
-        let nobinary_set: HashSet<UniqueNodeKey> = HashSet::new(); 
-        Self { nobinary_set } 
+        let binary_set: BinSet = BinSet::new(); 
+        Self { binary_set } 
     }
 
     pub fn push(&mut self, key : UniqueNodeKey){
-        self.nobinary_set.insert(key);
+        self.binary_set.push(key);
     }
 
     pub fn pop(&mut self, key : UniqueNodeKey){
-        self.nobinary_set.remove(&key);
+        self.binary_set.pop(key);
     }
 
     pub fn to_empty(&mut self){
-        let nobinary_set: HashSet<UniqueNodeKey> = HashSet::new(); 
-        self.nobinary_set = nobinary_set;
+        self.binary_set.to_empty();
     }
 
     pub fn isempty(&self) -> bool {
-        return self.nobinary_set.is_empty()
+        return self.binary_set.isempty()
     }
 
     pub fn have(&self, key : UniqueNodeKey) -> bool {
-        return self.nobinary_set.contains(&key);
+        return self.binary_set.have(key);
     }
 
     pub fn union(&mut self, owners_set_b : &OwnersFixedSet){
-        for key in owners_set_b.nobinary_set.iter() {
-            self.push(*key);
-        }
+        self.binary_set.union(&owners_set_b.binary_set)
     }
 
     pub fn intersect(&mut self, owners_set_b : &OwnersFixedSet){
-        let mut keys_to_remove : Vec<UniqueNodeKey> = Vec::new();
-        for key  in self.nobinary_set.iter() {
-            if !owners_set_b.have(*key) {
-                keys_to_remove.push(*key);
-            }
-        }
-
-        for key in keys_to_remove.iter(){
-            self.pop(*key);
-        }
+        self.binary_set.intersection(&owners_set_b.binary_set);
     }
 
     pub fn to_list(&mut self){
@@ -59,24 +49,25 @@ impl OwnersFixedSet {
         //self.nobinary_set.iter().collect()
     }
 
-    pub fn get_set(&self) -> &HashSet<UniqueNodeKey> {
+   /* pub fn get_set(&self) -> &HashSet<UniqueNodeKey> {
         &self.nobinary_set
-    }
+    }*/ 
 
     pub fn count(&self) -> usize {
-        return self.nobinary_set.len()
+        return self.binary_set.count() as usize
     }
 
 }
 
 impl PartialEq for OwnersFixedSet {
     fn eq(&self, other: &Self) -> bool {
-        return self.nobinary_set.eq(&other.nobinary_set);
+        return self.binary_set.eq(&other.binary_set);
     }
 }
 
 impl fmt::Display for OwnersFixedSet {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        return write!(f, "{:?}", self.nobinary_set);
+        //return write!(f, "{:?}", self.binary_set);
+        write!(f, "not_display_binaryset")
     }
 }

@@ -97,7 +97,7 @@ impl OwnersByStep {
 
         if flag_isempty {
             self.dict.remove(&step);
-            self.valid = false;
+            self._to_invalid();
         }
     }
 
@@ -133,7 +133,7 @@ impl OwnersByStep {
                borrow_owners_set_a.union(borrow_owners_set_b);
             }
         }else{
-            self.valid = false;
+            self._to_invalid();
         }
     }
 
@@ -155,10 +155,10 @@ impl OwnersByStep {
                         borrow_owners_set_a.intersect(borrow_owners_set_b);
 
                         if borrow_owners_set_a.isempty() {
-                            self.valid = false;
+                            self._to_invalid();
                         }
                     },
-                    (_, _) => self.valid = false,
+                    (_, _) => self._to_invalid(),
                 }
 
                 if !self.valid && loop_short {
@@ -166,8 +166,15 @@ impl OwnersByStep {
                 }
             }
         }else{
-            self.valid = false;
+            self._to_invalid();
         }
+    }
+
+    fn _to_invalid(&mut self){
+        self.dict = HashMap::new();
+        self.max_step = 0;
+
+        self.valid = false;
     }
     
     pub fn count(&self, step : Step) -> usize {

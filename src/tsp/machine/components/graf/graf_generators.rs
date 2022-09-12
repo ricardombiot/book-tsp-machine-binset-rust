@@ -1,5 +1,6 @@
 use crate::tsp::utils::alias::{Color, Weight};
 use crate::tsp::machine::components::graf::Grafo;
+use rand::prelude::*;
 
 impl Grafo { 
     pub fn gen_complete(n : Color, peso : Weight)-> Self {
@@ -13,6 +14,28 @@ impl Grafo {
                     let peso : Weight = peso.clone() as Weight;
 
                     g.add_bidirectional(origin_color, destino_color, peso);
+                }
+            }
+        }
+
+        return g;
+    }
+
+    pub fn gen_dircomplete_rnd(n : Color, peso_min : Weight, peso_max : Weight)-> Self {
+        let mut g = Grafo::new(n);
+        let mut rng = thread_rng();
+        //let peso_min = peso_min.clone() as u32;
+        //let peso_max = peso_max.clone() as u32;
+
+        for origen in 0..n {
+            for destino in 0..n {
+                if origen != destino {
+                    let origin_color : Color = origen.clone() as Color;
+                    let destino_color : Color = destino.clone() as Color;
+                    let peso : Weight = rng.gen_range(peso_min..peso_max+1) as Weight;
+                    //let peso : Weight = peso.clone() as Weight;
+
+                    g.add(origin_color, destino_color, peso);
                 }
             }
         }
@@ -46,6 +69,8 @@ impl Grafo {
 
         return g;
     }
+
+
 
     /*
         function dodecaedro() :: Grafo

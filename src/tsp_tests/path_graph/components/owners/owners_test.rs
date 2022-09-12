@@ -159,8 +159,10 @@ pub fn test_operations_owner(){
     let mut owners_set_a_copy = owners_set_a.clone();
     owners_set_a_copy.intersect(&owners_set_b);
     assert_eq!(owners_set_a_copy.valid(), false);
+    // When is UNVALID all it information is consider incoherente, then is remove it.
 
 
+    /* 
     // The unique common is the root: s0_2
     for ref_node_id in subset_a.iter() {
         let node_id = *ref_node_id;
@@ -194,6 +196,7 @@ pub fn test_operations_owner(){
     assert_eq!(owners_set_a_copy.count(1 as Step), 0);
     assert_eq!(owners_set_a_copy.count(2 as Step), 2);
     assert_eq!(owners_set_a_copy.count(3 as Step), 1);
+    */
 
 }
 

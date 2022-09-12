@@ -8,6 +8,7 @@ pub mod tsp {
 
         pub mod machines {
             pub mod hal_machine;
+            pub mod tsp_machine;
         }
     }
     pub mod actions {
@@ -25,6 +26,19 @@ pub mod tsp {
 
 #[cfg(test)]
 mod tsp_tests;
+
+pub mod binset {
+    pub mod binset;
+    pub mod binset128;
+    pub mod numeric_set;
+}
+
+#[cfg(test)]
+mod binset_tests {
+    pub mod test_binset;
+    pub mod test_binset128;
+}
+
 mod app {
     pub mod main; 
     mod examples;
