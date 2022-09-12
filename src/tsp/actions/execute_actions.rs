@@ -41,9 +41,14 @@ fn reduce_map_up_parents(db : &mut DatabaseActions, action_id : &ActionId) {
                 let mut list_derive_graphs = dict_graphs_by_lenght.dict().to_list_values();
                 for graph_derive in list_derive_graphs.iter_mut() { 
                     graph_derive.up(up_color, action_id.clone());
-    
-                    let graph_join = graph_derive.to_owned();
-                    push_graph_by_lenght(db, action_id, graph_join);
+
+                    if graph_derive.valid() {
+                        let graph_join = graph_derive.to_owned();
+                        push_graph_by_lenght(db, action_id, graph_join);
+                    }else{
+                        println!("free graph_derive");
+                        drop(graph_derive.to_owned());
+                    }
                 }
             }
         }else{

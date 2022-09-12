@@ -60,7 +60,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "tsp_machine"
+name = "tsp_machine_binset"
 version = "0.1.0"
 dependencies = [
  "rand",

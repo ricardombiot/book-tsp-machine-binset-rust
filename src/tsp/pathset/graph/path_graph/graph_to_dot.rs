@@ -213,9 +213,10 @@ impl DotGraph for OwnersFixedSet {
     fn to_dot(&self) -> String {
         let mut dot_content = String::new();
         
-        for key in self.get_set() {
+        /*for key in self.get_set() {
             dot_content += &format!("{},",key);
-        }
+        }*/
+        todo!("Not implement for binaryset");
 
         return dot_content;
     }
